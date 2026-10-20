@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SparkStudy // Aesthetic AI Study Companion</title>
+  <title>SparkStudy // Grove Studio Edition</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #060c08;
-      --panel-bg: rgba(13, 26, 18, 0.85);
-      --border-green: #2d5a3c;
-      --bright-green: #62f297;
-      --dim-green: #388052;
-      --accent-alert: #e0f262;
-      --text-main: #e8f5ed;
-      --font-term: 'VT323', monospace;
+      --bg-base: #060e09;
+      --bg-surface: rgba(13, 31, 20, 0.75);
+      --bg-surface-hover: rgba(20, 48, 31, 0.85);
+      --panel-border: #1e422b;
+      --accent-grove: #42b873;
+      --accent-grove-glow: rgba(66, 184, 115, 0.3);
+      --accent-leaf: #82e0aa;
+      --accent-warning: #e6c86e;
+      --text-main: #e4f2ea;
+      --text-muted: #83a891;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
 
@@ -27,33 +30,26 @@
     }
 
     body {
-      background-color: var(--bg-color);
+      background-color: var(--bg-base);
       color: var(--text-main);
-      font-family: var(--font-mono);
+      font-family: var(--font-sans);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(rgba(45, 90, 60, 0.15) 1px, transparent 0);
-      background-size: 24px 24px;
+        radial-gradient(circle at 15% 15%, rgba(42, 90, 58, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(18, 50, 32, 0.3) 0%, transparent 50%),
+        radial-gradient(rgba(42, 90, 58, 0.12) 1px, transparent 0);
+      background-size: 100% 100%, 100% 100%, 28px 28px;
     }
 
-    /* CRT Scanline Overlay */
-    .crt-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-      background-size: 100% 3px, 6px 100%;
-      z-index: 999;
-    }
-
-    /* Header Bar */
+    /* Top Navigation */
     header {
-      background: #09140c;
-      border-bottom: 2px solid var(--border-green);
-      padding: 12px 20px;
+      background: rgba(9, 20, 13, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--panel-border);
+      padding: 14px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -62,185 +58,204 @@
       z-index: 100;
     }
 
-    .title-group {
+    .brand-group {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .dots {
+    .grove-icon {
+      width: 24px;
+      height: 24px;
+      background: var(--accent-grove);
+      border-radius: 6px;
       display: flex;
-      gap: 6px;
+      align-items: center;
+      justify-content: center;
+      color: #060e09;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 0 12px var(--accent-grove-glow);
     }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-
-    .dot-red { background: #ff5f56; }
-    .dot-yellow { background: #ffbd2e; }
-    .dot-green { background: #27c93f; }
 
     h1 {
-      font-family: var(--font-term);
-      font-size: 28px;
-      color: var(--bright-green);
-      letter-spacing: 1.5px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
     }
 
     .status-badge {
-      font-size: 12px;
-      background: #142a1d;
-      border: 1px solid var(--dim-green);
-      color: var(--accent-alert);
-      padding: 4px 10px;
-      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: rgba(66, 184, 115, 0.1);
+      border: 1px solid rgba(66, 184, 115, 0.3);
+      color: var(--accent-leaf);
+      padding: 5px 12px;
+      border-radius: 20px;
     }
 
-    /* Main App Layout Grid */
+    /* Main Grid */
     .app-container {
       display: grid;
       grid-template-columns: 320px 1fr 340px;
-      gap: 16px;
-      padding: 16px;
+      gap: 20px;
+      padding: 20px;
       flex-grow: 1;
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1150px) {
       .app-container {
         grid-template-columns: 1fr;
       }
     }
 
-    /* Retro Panel Box */
+    /* Cards & Panels */
     .panel {
-      background: var(--panel-bg);
-      border: 2px solid var(--border-green);
-      border-radius: 4px;
-      padding: 16px;
-      backdrop-filter: blur(8px);
+      background: var(--bg-surface);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 20px;
+      backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      gap: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     }
 
     .panel-header {
-      font-family: var(--font-term);
-      font-size: 22px;
-      color: var(--bright-green);
-      border-bottom: 1px solid var(--border-green);
-      padding-bottom: 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid var(--panel-border);
+      padding-bottom: 12px;
     }
 
-    /* Buttons & Inputs */
+    .panel-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-leaf);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Interactive Buttons */
     .btn {
-      background: #142a1d;
-      border: 1.5px solid var(--bright-green);
-      color: var(--bright-green);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 8px 14px;
+      background: rgba(66, 184, 115, 0.12);
+      border: 1px solid var(--accent-grove);
+      color: var(--accent-leaf);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 16px;
       cursor: pointer;
-      border-radius: 3px;
-      transition: all 0.2s ease;
-      text-transform: uppercase;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .btn:hover {
-      background: var(--bright-green);
-      color: #060c08;
-      box-shadow: 0 0 10px var(--bright-green);
+      background: var(--accent-grove);
+      color: #060e09;
+      box-shadow: 0 0 16px var(--accent-grove-glow);
     }
 
-    .btn-alert {
-      border-color: var(--accent-alert);
-      color: var(--accent-alert);
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--panel-border);
+      color: var(--text-muted);
     }
 
-    .btn-alert:hover {
-      background: var(--accent-alert);
-      color: #060c08;
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      box-shadow: none;
     }
 
     input, textarea, select {
-      background: #09140c;
-      border: 1px solid var(--dim-green);
-      color: var(--bright-green);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      padding: 8px;
-      border-radius: 3px;
+      background: rgba(6, 14, 9, 0.8);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 8px;
       width: 100%;
+      transition: all 0.2s ease;
     }
 
     input:focus, textarea:focus {
       outline: none;
-      border-color: var(--bright-green);
-      box-shadow: 0 0 5px rgba(98, 242, 151, 0.4);
+      border-color: var(--accent-grove);
+      box-shadow: 0 0 10px var(--accent-grove-glow);
     }
 
-    /* Ingestion / Upload Dropzone */
+    /* Upload Zone */
     .drop-zone {
-      border: 2px dashed var(--dim-green);
-      border-radius: 4px;
-      padding: 20px;
+      border: 2px dashed var(--panel-border);
+      border-radius: 10px;
+      padding: 24px 16px;
       text-align: center;
-      background: rgba(9, 20, 12, 0.5);
+      background: rgba(6, 14, 9, 0.4);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
     }
 
     .drop-zone:hover {
-      border-color: var(--bright-green);
-      background: rgba(20, 42, 29, 0.5);
+      border-color: var(--accent-grove);
+      background: rgba(66, 184, 115, 0.05);
     }
 
     .tag-cloud {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 6px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     .tag {
+      font-family: var(--font-mono);
       font-size: 10px;
-      background: #142a1d;
-      border: 1px solid var(--border-green);
-      color: var(--dim-green);
-      padding: 2px 6px;
-      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      padding: 3px 8px;
+      border-radius: 4px;
     }
 
-    /* Live Recorder Waveform */
+    /* Live Recorder */
     .recorder-box {
-      background: #09140c;
-      border: 1px solid var(--dim-green);
-      padding: 12px;
-      border-radius: 4px;
+      background: rgba(6, 14, 9, 0.6);
+      border: 1px solid var(--panel-border);
+      padding: 14px;
+      border-radius: 10px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .rec-indicator {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--accent-alert);
+      color: var(--accent-warning);
       font-size: 12px;
+      font-weight: 600;
     }
 
     .rec-dot {
       width: 8px; height: 8px;
-      background: #ff4d4d;
+      background: #ff5f56;
       border-radius: 50%;
+      box-shadow: 0 0 8px #ff5f56;
       animation: pulse 1.5s infinite;
     }
 
@@ -250,28 +265,30 @@
       100% { opacity: 1; }
     }
 
-    /* Flashcard 3D Interactive Container */
+    /* Flashcard 3D */
     .card-container {
       perspective: 1000px;
-      height: 200px;
+      height: 210px;
     }
 
     .flashcard {
       width: 100%;
       height: 100%;
-      background: #0a1a10;
-      border: 2px solid var(--bright-green);
-      border-radius: 6px;
-      padding: 20px;
+      background: linear-gradient(145deg, rgba(13, 31, 20, 0.9), rgba(6, 14, 9, 0.9));
+      border: 1px solid var(--accent-grove);
+      border-radius: 12px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-anchor: middle;
       text-align: center;
       cursor: pointer;
-      transition: transform 0.6s;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       transform-style: preserve-3d;
       position: relative;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
     .flashcard.flipped {
@@ -287,134 +304,105 @@
 
     .card-back {
       transform: rotateY(180deg);
-      color: var(--accent-alert);
+      color: var(--accent-leaf);
     }
 
-    /* Spaced Repetition Bar */
     .rep-buttons {
       display: flex;
       gap: 8px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .rep-btn {
       flex: 1;
       font-size: 11px;
-      padding: 6px;
+      padding: 8px;
     }
 
-    /* Quiz Container */
+    /* Quiz Option Cards */
     .quiz-option {
-      background: #0d1f14;
-      border: 1px solid var(--dim-green);
-      padding: 10px;
+      background: rgba(6, 14, 9, 0.6);
+      border: 1px solid var(--panel-border);
+      padding: 12px 14px;
       margin-bottom: 8px;
-      border-radius: 3px;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 13px;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
 
     .quiz-option:hover {
-      border-color: var(--bright-green);
-      background: #142a1d;
+      border-color: var(--accent-grove);
+      background: rgba(66, 184, 115, 0.08);
     }
 
     .quiz-option.selected {
-      border-color: var(--bright-green);
-      background: var(--bright-green);
-      color: #060c08;
-      font-weight: bold;
+      border-color: var(--accent-grove);
+      background: var(--accent-grove);
+      color: #060e09;
+      font-weight: 600;
     }
 
-    /* Audio Player */
-    .audio-player {
-      background: #0d2115;
-      border: 1px solid var(--dim-green);
-      padding: 12px;
-      border-radius: 4px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .progress-bar {
-      height: 6px;
-      background: #1c3d28;
-      border-radius: 3px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress-fill {
-      width: 45%;
-      height: 100%;
-      background: var(--bright-green);
-    }
-
-    /* Terminal Chat AI */
+    /* Terminal AI Chat */
     .chat-box {
-      background: #050b07;
-      border: 1px solid var(--bright-green);
-      border-radius: 4px;
-      height: 280px;
+      background: rgba(6, 14, 9, 0.9);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      height: 300px;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     .chat-messages {
       flex-grow: 1;
-      padding: 10px;
+      padding: 14px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      font-size: 12px;
+      gap: 10px;
+      font-size: 13px;
     }
 
-    .msg-spark { color: var(--bright-green); }
-    .msg-user { color: var(--accent-alert); }
+    .msg-spark { color: var(--accent-leaf); line-height: 1.4; }
+    .msg-user { color: var(--accent-warning); line-height: 1.4; }
 
     .chat-input-group {
       display: flex;
-      border-top: 1px solid var(--dim-green);
+      border-top: 1px solid var(--panel-border);
     }
 
     .chat-input-group input {
       border: none;
       border-radius: 0;
+      background: transparent;
     }
 
-    /* Progress Bar Metrics */
+    /* Progress Metric Bars */
     .metric-bar {
-      height: 8px;
-      background: #102417;
-      border-radius: 4px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 3px;
       overflow: hidden;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
     .metric-fill {
       height: 100%;
-      background: var(--bright-green);
+      background: var(--accent-grove);
+      border-radius: 3px;
     }
   </style>
 </head>
 <body>
 
-  <div class="crt-overlay"></div>
-
   <!-- Header -->
   <header>
-    <div class="title-group">
-      <div class="dots">
-        <div class="dot dot-red"></div>
-        <div class="dot dot-yellow"></div>
-        <div class="dot dot-green"></div>
-      </div>
-      <h1>SPARKSTUDY // OS_v2.6</h1>
+    <div class="brand-group">
+      <div class="grove-icon">🌿</div>
+      <h1>SparkStudy <span style="font-weight: 400; color: var(--text-muted); font-size: 14px;">// Grove Studio</span></h1>
     </div>
-    <div class="status-badge">[MODE: AI_LIVE_INGESTION]</div>
+    <div class="status-badge">AI Material Ingestion Active</div>
   </header>
 
   <!-- App Workspace -->
@@ -423,13 +411,13 @@
     <!-- LEFT COLUMN: INGESTION & MATERIAL HUB -->
     <div class="panel">
       <div class="panel-header">
-        <span>01 :: MATERIAL HUB</span>
+        <span class="panel-title">📁 Material Hub</span>
       </div>
 
-      <!-- Broad Format Upload -->
+      <!-- Upload Dropzone -->
       <div class="drop-zone" id="dropZone">
-        <p style="font-size: 14px; font-weight: bold; color: var(--bright-green);">+ UPLOAD / DROP MATERIAL</p>
-        <p style="font-size: 10px; color: var(--dim-green); margin-top: 4px;">PDF, PPTX, DOCX, GOOGLE DOCS, YOUTUBE LINK</p>
+        <p style="font-size: 14px; font-weight: 600; color: var(--accent-leaf);">+ Upload Study Material</p>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">PDF, PPTX, Word, Docs, YouTube, Quizlet</p>
         <div class="tag-cloud">
           <span class="tag">.PDF</span>
           <span class="tag">.PPTX</span>
@@ -442,28 +430,26 @@
       <div class="recorder-box">
         <div class="rec-indicator">
           <div class="rec-dot"></div>
-          <span>LIVELECTURE RECORDER</span>
+          <span>LiveLecture Recorder</span>
         </div>
-        <p style="font-size: 10px; color: var(--dim-green);">Transcribing lecture audio in real-time...</p>
-        <button class="btn btn-alert" onclick="toggleRecord()">RECORD LIVE CLASS</button>
+        <p style="font-size: 11px; color: var(--text-muted);">Transcribing lecture audio in real-time...</p>
+        <button class="btn" style="width: 100%;" onclick="toggleRecord()">Record Live Class</button>
       </div>
 
       <!-- Notes AI Parser -->
       <div style="display: flex; flex-direction: column; gap: 8px;">
-        <span style="font-size: 12px; color: var(--bright-green);">NOTES_AI // PARSED SUMMARY</span>
-        <textarea rows="8" placeholder="Upload a document or type notes here to convert into flashcards, quizzes, or podcast recaps..."></textarea>
+        <span style="font-size: 12px; font-weight: 600; color: var(--accent-leaf);">Notes AI Summary</span>
+        <textarea rows="7" placeholder="Upload a document or paste notes here to instantly extract flashcards, quizzes, and podcasts..."></textarea>
       </div>
 
       <!-- Audio Recap Podcast -->
-      <div class="audio-player">
-        <span style="font-size: 12px; color: var(--bright-green);">AUDIO RECAP / PODCAST</span>
-        <span style="font-size: 10px; color: var(--dim-green);">"Alkalinity & Clean Air Act Overview"</span>
-        <div class="progress-bar">
-          <div class="progress-fill"></div>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
-          <button class="btn" style="padding: 4px 8px; font-size: 10px;">► PLAY RECAP</button>
-          <span style="font-size: 10px; color: var(--dim-green);">03:45 / 11:20</span>
+      <div style="background: rgba(6, 14, 9, 0.6); border: 1px solid var(--panel-border); padding: 12px; border-radius: 10px;">
+        <span style="font-size: 12px; font-weight: 600; color: var(--accent-leaf);">Audio Recap Podcast</span>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">"Alkalinity & Clean Air Act Overview"</p>
+        <div class="metric-bar" style="margin: 10px 0;"><div class="metric-fill" style="width: 42%;"></div></div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 11px;">► Play Podcast</button>
+          <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">03:45 / 11:20</span>
         </div>
       </div>
     </div>
@@ -471,59 +457,59 @@
     <!-- CENTER COLUMN: INTERACTIVE PRACTICE SUITE -->
     <div class="panel">
       <div class="panel-header">
-        <span>02 :: PRACTICE STUDIO</span>
+        <span class="panel-title">⚡ Practice Studio</span>
       </div>
 
       <!-- Flashcards AI -->
       <div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-          <span style="font-size: 14px; color: var(--bright-green);">FLASHCARDS AI</span>
-          <span style="font-size: 10px; color: var(--dim-green);">DECK: 24 CARDS</span>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
+          <span style="font-size: 14px; font-weight: 600;">Flashcards AI</span>
+          <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">24 CARDS</span>
         </div>
 
         <div class="card-container" onclick="flipCard()">
           <div class="flashcard" id="card">
             <div class="card-front">
-              <p style="font-size: 11px; color: var(--dim-green); margin-bottom: 8px;">QUESTION (CLICK TO FLIP)</p>
-              <p style="font-size: 16px;">What is the primary indicator used in alkalinity titrations?</p>
+              <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 10px;">QUESTION (CLICK TO REVEAL)</p>
+              <p style="font-size: 16px; font-weight: 500;">What is the primary indicator used in alkalinity titrations?</p>
             </div>
             <div class="card-back">
-              <p style="font-size: 11px; color: var(--dim-green); margin-bottom: 8px;">ANSWER</p>
-              <p style="font-size: 16px;">Bromcresol Green (turns light pink at pH 4.5)</p>
+              <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 10px;">ANSWER</p>
+              <p style="font-size: 16px; font-weight: 600;">Bromcresol Green (turns light pink at pH 4.5)</p>
             </div>
           </div>
         </div>
 
         <div class="rep-buttons">
-          <button class="btn rep-btn" style="border-color: #ff5f56; color: #ff5f56;">AGAIN (10m)</button>
-          <button class="btn rep-btn" style="border-color: #ffbd2e; color: #ffbd2e;">HARD (1d)</button>
-          <button class="btn rep-btn">EASY (4d)</button>
+          <button class="btn btn-secondary rep-btn" style="border-color: #ff5f56; color: #ff5f56;">Again (10m)</button>
+          <button class="btn btn-secondary rep-btn" style="border-color: var(--accent-warning); color: var(--accent-warning);">Hard (1d)</button>
+          <button class="btn rep-btn">Easy (4d)</button>
         </div>
       </div>
 
       <!-- Practice Quiz Engine -->
-      <div style="margin-top: 12px;">
-        <span style="font-size: 14px; color: var(--bright-green); display: block; margin-bottom: 8px;">MOCK QUIZ ENGINE</span>
+      <div style="margin-top: 10px;">
+        <span style="font-size: 14px; font-weight: 600; display: block; margin-bottom: 10px;">Mock Quiz Engine</span>
         <div class="quiz-option" onclick="selectOpt(this)">A. Phenolphthalein</div>
         <div class="quiz-option" onclick="selectOpt(this)">B. Bromcresol Green</div>
         <div class="quiz-option" onclick="selectOpt(this)">C. Methyl Orange</div>
       </div>
 
       <!-- Essay Grader -->
-      <div style="border-top: 1px solid var(--border-green); padding-top: 12px; margin-top: 8px;">
-        <span style="font-size: 14px; color: var(--bright-green); display: block; margin-bottom: 6px;">AI ESSAY GRADER</span>
-        <textarea rows="3" placeholder="Paste essay paragraph for instant structure, grammar, and rubric feedback..."></textarea>
-        <button class="btn btn-alert" style="margin-top: 6px; width: 100%;">GRADE ESSAY NOW</button>
+      <div style="border-top: 1px solid var(--panel-border); padding-top: 14px; margin-top: 6px;">
+        <span style="font-size: 14px; font-weight: 600; display: block; margin-bottom: 8px;">AI Essay Grader</span>
+        <textarea rows="3" placeholder="Paste essay paragraph for instant rubric feedback..."></textarea>
+        <button class="btn" style="margin-top: 10px; width: 100%;">Grade Essay</button>
       </div>
 
       <!-- Study Arcade -->
-      <div style="border: 1px solid var(--accent-alert); padding: 10px; border-radius: 4px; background: #08140c; margin-top: 8px;">
+      <div style="border: 1px solid var(--panel-border); padding: 14px; border-radius: 10px; background: rgba(6, 14, 9, 0.5);">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <div>
-            <span style="font-size: 14px; color: var(--accent-alert);">STUDY ARCADE</span>
-            <p style="font-size: 10px; color: var(--dim-green);">Game: Titration Defender</p>
+            <span style="font-size: 14px; font-weight: 600; color: var(--accent-warning);">Study Arcade</span>
+            <p style="font-size: 11px; color: var(--text-muted);">Titration Defender Challenge</p>
           </div>
-          <button class="btn btn-alert">PLAY</button>
+          <button class="btn btn-secondary">Play Game</button>
         </div>
       </div>
     </div>
@@ -531,48 +517,48 @@
     <!-- RIGHT COLUMN: DASHBOARD & SPARK AI CHAT -->
     <div class="panel">
       <div class="panel-header">
-        <span>03 :: DESK & INSIGHTS</span>
+        <span class="panel-title">📊 Desk & Insights</span>
       </div>
 
       <!-- Class Priorities & Mastery -->
       <div>
-        <span style="font-size: 12px; color: var(--bright-green);">CLASS MASTERY & PRIORITIES</span>
+        <span style="font-size: 12px; font-weight: 600; color: var(--accent-leaf);">Class Mastery</span>
         
-        <div style="margin-top: 8px;">
-          <div style="display: flex; justify-content: space-between; font-size: 10px;">
-            <span>AP LITERATURE</span>
-            <span style="color: var(--bright-green);">92%</span>
+        <div style="margin-top: 10px;">
+          <div style="display: flex; justify-content: space-between; font-size: 12px;">
+            <span>AP Literature</span>
+            <span style="color: var(--accent-leaf); font-weight: 600;">92%</span>
           </div>
           <div class="metric-bar"><div class="metric-fill" style="width: 92%;"></div></div>
         </div>
 
-        <div style="margin-top: 8px;">
-          <div style="display: flex; justify-content: space-between; font-size: 10px;">
-            <span>AP US GOVERNMENT</span>
-            <span style="color: var(--bright-green);">85%</span>
+        <div style="margin-top: 10px;">
+          <div style="display: flex; justify-content: space-between; font-size: 12px;">
+            <span>AP US Government</span>
+            <span style="color: var(--accent-leaf); font-weight: 600;">85%</span>
           </div>
           <div class="metric-bar"><div class="metric-fill" style="width: 85%;"></div></div>
         </div>
 
-        <div style="margin-top: 8px;">
-          <div style="display: flex; justify-content: space-between; font-size: 10px;">
-            <span>FRENCH VOCAB</span>
-            <span style="color: var(--accent-alert);">64%</span>
+        <div style="margin-top: 10px;">
+          <div style="display: flex; justify-content: space-between; font-size: 12px;">
+            <span>French Vocab</span>
+            <span style="color: var(--accent-warning); font-weight: 600;">64%</span>
           </div>
-          <div class="metric-bar"><div class="metric-fill" style="width: 64%; background: var(--accent-alert);"></div></div>
+          <div class="metric-bar"><div class="metric-fill" style="width: 64%; background: var(--accent-warning);"></div></div>
         </div>
       </div>
 
-      <!-- Spark AI Tutor Terminal -->
+      <!-- Spark AI Tutor -->
       <div style="margin-top: 10px;">
-        <span style="font-size: 12px; color: var(--bright-green); display: block; margin-bottom: 6px;">SPARK AI TUTOR</span>
+        <span style="font-size: 12px; font-weight: 600; color: var(--accent-leaf); display: block; margin-bottom: 8px;">Spark AI Tutor</span>
         <div class="chat-box">
           <div class="chat-messages" id="chatMsg">
-            <div class="msg-spark">[SPARK]: Hi! I've loaded your notes. What concept would you like to review?</div>
+            <div class="msg-spark"><strong>[Spark]:</strong> Hi Elery! I've ingested your study notes. What concept shall we focus on today?</div>
           </div>
           <div class="chat-input-group">
             <input type="text" id="userInput" placeholder="Ask Spark anything..." onkeydown="if(event.key==='Enter') sendMsg()">
-            <button class="btn" onclick="sendMsg()">SEND</button>
+            <button class="btn" style="border-radius: 0; border: none;" onclick="sendMsg()">Send</button>
           </div>
         </div>
       </div>
@@ -581,25 +567,21 @@
   </div>
 
   <script>
-    // Flashcard Flip
     function flipCard() {
       document.getElementById('card').classList.toggle('flipped');
     }
 
-    // Quiz Selection
     function selectOpt(element) {
       document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
       element.classList.add('selected');
     }
 
-    // Live Recorder Mock
     let recording = false;
     function toggleRecord() {
       recording = !recording;
       alert(recording ? "LiveLecture Audio Recording Started..." : "Recording Stopped & Transcribed!");
     }
 
-    // Spark AI Chatbot Mock
     function sendMsg() {
       const input = document.getElementById('userInput');
       const chat = document.getElementById('chatMsg');
@@ -607,7 +589,7 @@
 
       const userDiv = document.createElement('div');
       userDiv.className = 'msg-user';
-      userDiv.textContent = '[YOU]: ' + input.value;
+      userDiv.innerHTML = '<strong>[You]:</strong> ' + input.value;
       chat.appendChild(userDiv);
 
       const query = input.value;
@@ -616,7 +598,7 @@
       setTimeout(() => {
         const sparkDiv = document.createElement('div');
         sparkDiv.className = 'msg-spark';
-        sparkDiv.textContent = '[SPARK]: Explaining "' + query + '" — ' + getRandomResponse();
+        sparkDiv.innerHTML = '<strong>[Spark]:</strong> Explaining "' + query + '" — ' + getRandomResponse();
         chat.appendChild(sparkDiv);
         chat.scrollTop = chat.scrollHeight;
       }, 600);
